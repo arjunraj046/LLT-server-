@@ -18,7 +18,7 @@ const login = async (req, res) => {
       // token generate for agent
       token = generateToken(user._id);
     }
-    res.status(200).json({ token, user });
+    res.status(200).json({ status: "success", token, user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

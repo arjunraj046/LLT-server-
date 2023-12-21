@@ -1,4 +1,4 @@
-const { agentRegisterDB, listAgentsDB, agentProfileEditDB, changeAgentStatusDB, listEntityDB } = require("../database/repository/adminRepository");
+const { agentRegisterDB, listAgentsDB, agentProfileEditDB, changeAgentStatusDB, listEntityDB, rangeSetupDB, rangeListDB } = require("../database/repository/adminRepository");
 const { passwordHashing } = require("../services/hasinging");
 const { getAgent } = require("../database/repository/authRepository");
 
@@ -63,13 +63,23 @@ const listEntity = async (req, res) => {
   }
 };
 
-// const listEntity = async (req, res) => {
-//   try {
-//     const list = await listEntityDB();
-//     res.status(200).json({ status: "success", list });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
+const rangeSetup = async (req, res) => {
+  try {
+    const { startRange, endRange, color } = req.body;
+    const range = await rangeSetupDB(startRange, endRange, color);
+    res.status(200).json({ status: "success", range });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
-module.exports = { agentRegister, agentList, agentDetails, editAgent, agentStatusChange, listEntity };
+const rangeList = async (req, res) => {
+  try {
+    const rangeList = await rangeListDB();
+    res.status(200).json({ status: "success", rangeList });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { agentRegister, agentList, agentDetails, editAgent, agentStatusChange, listEntity, rangeSetup, rangeList };
