@@ -10,6 +10,9 @@ const login = async (req, res) => {
     if (!user || !isPasswordValid) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
+    if (user.status) {
+      return res.status(401).json({ error: "User is blocked" });
+    }
     let token;
     if (user.userRole == 1) {
       // token generate for admin
